@@ -63,13 +63,6 @@ class DATABASE_CONFIG {
 
 
 	public $default = array(
-		// 'datasource' => 'Database/Mysql',
-		// 'persistent' => false,
-		// 'host' => '10.1.1.42',
-		// 'login' => 'ascend_db_admin',
-		// 'password' => 'ascendhonbandb30',
-		// 'database' => 'robot_test',
-		// 'prefix' => '',
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => '127.0.0.1',
