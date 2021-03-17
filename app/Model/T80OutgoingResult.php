@@ -18,7 +18,6 @@ class T80OutgoingResult extends AppModel {
     function getNumCalled($schedule_id) {
         $options['conditions'] = array(
             'T80OutgoingResult.schedule_id' => $schedule_id,
-            'T80OutgoingResult.del_flag' => 'N',
         );
 
         return $this->find('count', $options);
@@ -31,7 +30,6 @@ class T80OutgoingResult extends AppModel {
         $no_answer = $this->importUtilComponent()->getCallResultConnectStatusArray();
         $options['conditions'] = array(
             'T80OutgoingResult.schedule_id' => $schedule_id,
-            'T80OutgoingResult.del_flag' => 'N',
             'T80OutgoingResult.status IN' => $no_answer,
         );
 
@@ -43,7 +41,6 @@ class T80OutgoingResult extends AppModel {
     function getNumSkip($schedule_id) {
         $options['conditions'] = array(
             'T80OutgoingResult.schedule_id' => $schedule_id,
-            'T80OutgoingResult.del_flag' => 'N',
             'T80OutgoingResult.status' => 'recover',
         );
 
@@ -58,7 +55,6 @@ class T80OutgoingResult extends AppModel {
 
         $options ['conditions'] = array(
             'T80OutgoingResult.schedule_id' => $schedule_id,
-            'T80OutgoingResult.del_flag' => 'N',
             'T80OutgoingResult.answer' . $question_num . ' <> ""',
         );
 
@@ -102,7 +98,6 @@ class T80OutgoingResult extends AppModel {
 
         $options ['conditions'] = array(
             'T80OutgoingResult.schedule_id' => $schedule_id,
-            'T80OutgoingResult.del_flag' => 'N',
             'T80OutgoingResult.answer' . $question_num . ' != ""',
             'T51TelHistory.' . $auth_item_column . ' != ""',
         );
@@ -139,7 +134,6 @@ class T80OutgoingResult extends AppModel {
 
         $options ['conditions'] = array(
             'T80OutgoingResult.schedule_id' => $schedule_id,
-            'T80OutgoingResult.del_flag' => 'N',
             'T80OutgoingResult.answer' . $question_num . ' != ""',
             'T51TelHistory.' . $auth_item_column . ' != ""',
         );
@@ -147,7 +141,7 @@ class T80OutgoingResult extends AppModel {
         return $this->find('first', $options);
     }
 
-    function getAllByScheduleId($schedule_id=null, $ans_only=null, $tel_column=null, $date_from=null, $date_to=null, $get_sms = false) {
+    function getAllByScheduleId($schedule_id=null, $ans_only=null, $tel_column=null, $date_from=null, $date_to=null, $valid_del_flag = false) {
         $options['fields'] = array(
             'T80OutgoingResult.*',
             'T51TelHistory.*'
@@ -186,8 +180,11 @@ class T80OutgoingResult extends AppModel {
         /*20161129 Add by Linh : #8852 - get sms data - END*/
         $options['conditions'] = array(
             'T80OutgoingResult.schedule_id' => $schedule_id,
-            'T80OutgoingResult.del_flag' => 'N',
         );
+
+        if ($valid_del_flag) {
+            $options['conditions']['T80OutgoingResult.del_flag'] = "N";
+        }
         if (isset($ans_only) && $ans_only) {
             $options['conditions'][] = 'SUBSTR(T80OutgoingResult.ans_accuracy,1,POSITION("/" IN T80OutgoingResult.ans_accuracy) - 1) > 0';
             $options['conditions'][] = 'SUBSTR(T80OutgoingResult.ans_accuracy,1,POSITION("/" IN T80OutgoingResult.ans_accuracy) - 1) = SUBSTR(T80OutgoingResult.ans_accuracy,POSITION("/" IN T80OutgoingResult.ans_accuracy) + 1)';
@@ -238,7 +235,6 @@ class T80OutgoingResult extends AppModel {
 
         $options['conditions'] = array(
             'T80OutgoingResult.schedule_id' => $schedule_id,
-            'T80OutgoingResult.del_flag' => 'N',
         );
 
         //20160324 Edit by Thai : #6779 - update filter when have tran ques - Begin
@@ -385,7 +381,6 @@ class T80OutgoingResult extends AppModel {
 
         $options['conditions'] = array(
             'T80OutgoingResult.schedule_id' => $schedule_id,
-            'T80OutgoingResult.del_flag' => 'N',
         );
 
         //20160324 Edit by Thai : #6779 - update filter when have tran ques - Begin

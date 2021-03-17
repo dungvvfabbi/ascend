@@ -6,7 +6,7 @@
 class T800SmsSendResult extends AppModel {
     var $name = 'T800SmsSendResult';
 
-    function getAllByScheduleId($schedule_id=null, $tel_column=null, $limit=null, $page=null, $sort_order=null, $filter=null, $date_from=null, $date_to=null) {
+    function getAllByScheduleId($schedule_id=null, $tel_column=null, $limit=null, $page=null, $sort_order=null, $filter=null, $date_from=null, $date_to=null, $valid_del_flag = false) {
         $options['fields'] = array(
             'T800SmsSendResult.*',
             'T501SmsTelHistory.*'
@@ -26,9 +26,11 @@ class T800SmsSendResult extends AppModel {
         );
         $options['conditions'] = array(
             'T800SmsSendResult.schedule_id' => $schedule_id,
-            'T800SmsSendResult.del_flag' => 'N',
         );
 
+        if ($valid_del_flag) {
+            $options['conditions']['T800SmsSendResult.del_flag'] = "N";
+        }
         if(isset($filter) && !empty($filter)) {
             if (isset($filter[0])) {
                 $options['conditions']['T800SmsSendResult.send_datetime LIKE'] = "%" . $filter[0] . "%";
@@ -86,7 +88,6 @@ class T800SmsSendResult extends AppModel {
         );
         $options['conditions'] = array(
             'T800SmsSendResult.schedule_id' => $schedule_id,
-            'T800SmsSendResult.del_flag' => 'N',
         );
 
         if(isset($filter) && !empty($filter)) {
@@ -120,7 +121,6 @@ class T800SmsSendResult extends AppModel {
 
         $options['conditions'] = array(
             'T800SmsSendResult.schedule_id' => $schedule_id,
-            'T800SmsSendResult.del_flag' => 'N',
         );
         return $this->find('first', $options);
     }
@@ -146,7 +146,6 @@ class T800SmsSendResult extends AppModel {
         );
         $options['conditions'] = array(
             'T800SmsSendResult.schedule_id' => $schedule_id,
-            'T800SmsSendResult.del_flag' => 'N',
 //            'T800SmsSendResult.status' => 'success',
         );
         $options['group'] = array(

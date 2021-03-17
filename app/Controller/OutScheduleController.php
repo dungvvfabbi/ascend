@@ -3888,7 +3888,7 @@ class OutScheduleController extends AppController {
 
 	function get_question_type($ques_type) {
 		$arr_ques_type = array(
-			QUESTION_AUTH => '数値認証',
+			QUESTION_AUTH => '認証',
 			QUESTION_BASIC => '質問',
 			QUESTION_COUNT => 'カウント',
 			QUESTION_END => '切断',

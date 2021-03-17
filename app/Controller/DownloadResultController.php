@@ -177,7 +177,7 @@ class DownloadResultController extends AppController {
 			$tel_column = $tel_column['T12ListItem']['column'];
 
 			//get data from db to create csv file
-			$logs = $this->T80OutgoingResult->getAllByScheduleId($schedule_id, false, $tel_column, $date_from, $date_to);
+			$logs = $this->T80OutgoingResult->getAllByScheduleId($schedule_id, false, $tel_column, $date_from, $date_to, true);
 
 			foreach ($logs as $log) {
 				$data = $log['T80OutgoingResult'];
@@ -335,7 +335,7 @@ class DownloadResultController extends AppController {
 				$join_col = 'memo';
 				$logs = $this->T81IncomingResult->getallbyscheduleid_inboundcollation($schedule_id, $item_main_column, $join_col , null , $date_from , $date_to);
 			} else{
-				$logs = $this->T81IncomingResult->getAllByScheduleId($schedule_id, $item_main_column, $join_col , null , $date_from , $date_to);
+				$logs = $this->T81IncomingResult->getAllByScheduleId($schedule_id, $item_main_column, $join_col , null , $date_from , $date_to, true);
 			}
 
 			foreach ($logs as $log) {
@@ -419,7 +419,7 @@ class DownloadResultController extends AppController {
 			$tel_column = $tel_column['T102SmsListItem']['column'];
 
 			//get data from db to create csv file
-			$logs = $this->T800SmsSendResult->getAllByScheduleId($schedule_id, $tel_column, null, null, null, null, $date_from, $date_to);
+			$logs = $this->T800SmsSendResult->getAllByScheduleId($schedule_id, $tel_column, null, null, null, null, $date_from, $date_to, true);
 
 			foreach ($logs as $log) {
 				$data = $log['T800SmsSendResult'];

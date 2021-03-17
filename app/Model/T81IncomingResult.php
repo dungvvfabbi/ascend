@@ -21,7 +21,6 @@ class T81IncomingResult extends AppModel {
 		);
 		$options['conditions'] = array(
 			'T81IncomingResult.id' => $id,
-            'T81IncomingResult.del_flag' => 'N',
 		);
 
 		return $this->find('all', $options);
@@ -63,7 +62,6 @@ class T81IncomingResult extends AppModel {
 			}
 		}
 		$options['conditions']['T81IncomingResult.company_id'] = $company_id;
-		$options['conditions']['T81IncomingResult.del_flag'] = "N";
 		if(isset($sort_order) && !empty($sort_order)){
 			$options['order'] = $sort_order;
 		}else{
@@ -99,7 +97,6 @@ class T81IncomingResult extends AppModel {
 		);
 
 		$options['conditions']['T81IncomingResult.company_id'] = $company_id;
-		$options['conditions']['T81IncomingResult.del_flag'] = "N";
 		if(isset($filter) && !empty($filter)){
 			if(isset($filter[1])){
 				$options['conditions']['T81IncomingResult.list_no LIKE'] = "%".$filter[1]."%";
@@ -420,7 +417,6 @@ class T81IncomingResult extends AppModel {
 
         $options['conditions'] = array(
             'T81IncomingResult.inbound_id' => $inbound_id,
-            'T81IncomingResult.del_flag' => 'N',
             'T81IncomingResult.status <>' => 'recover',
         );
 
@@ -572,7 +568,7 @@ class T81IncomingResult extends AppModel {
         return $this->find('count', $options);
     }
 
-    function getAllByScheduleId($inbound_id = null, $item_main_column = null, $join_col = null, $ans_only = null, $date_from=null, $date_to=null) {
+    function getAllByScheduleId($inbound_id = null, $item_main_column = null, $join_col = null, $ans_only = null, $date_from=null, $date_to=null, $valid_del_flag = false) {
         $options['fields'] = array(
             'T81IncomingResult.*'
         );
@@ -594,8 +590,11 @@ class T81IncomingResult extends AppModel {
         }
         $options['conditions'] = array(
             'T81IncomingResult.inbound_id' => $inbound_id,
-            'T81IncomingResult.del_flag' => 'N',
         );
+
+        if ($valid_del_flag) {
+            $options['conditions']['T81IncomingResult.del_flag'] = "N";
+        }
         if ($ans_only) {
             $options['conditions'][] = 'SUBSTR(T81IncomingResult.ans_accuracy,1,POSITION("/" IN T81IncomingResult.ans_accuracy) - 1) > 0';
             $options['conditions'][] = 'SUBSTR(T81IncomingResult.ans_accuracy,1,POSITION("/" IN T81IncomingResult.ans_accuracy) - 1) = SUBSTR(T81IncomingResult.ans_accuracy,POSITION("/" IN T81IncomingResult.ans_accuracy) + 1)';
@@ -634,7 +633,6 @@ class T81IncomingResult extends AppModel {
 				}
 				$options['conditions'] = array(
 						'T81IncomingResult.inbound_id' => $inbound_id,
-                        'T81IncomingResult.del_flag' => 'N',
 				);
 				if ($ans_only) {
 						$options['conditions'][] = 'SUBSTR(T81IncomingResult.ans_accuracy,1,POSITION("/" IN T81IncomingResult.ans_accuracy) - 1) > 0';
