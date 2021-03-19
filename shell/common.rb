@@ -14,7 +14,7 @@ require 'net/sftp'
 require 'date'
 require 'time'
 require 'fileutils'
-# require 'mysql'
+require 'mysql'
 require 'curb'
 require 'uri'
 require 'net/http'
@@ -810,7 +810,9 @@ def sendMailInfo(schedule_id, message)
 	begin
 		AscMailer.send_mail(to, from, subject, body, "", "").deliver
 		writeLog("メールする　：　OK")
+		puts 'OK'
 	rescue Exception =>e
+		puts e.backtrace.join("\n")
 		body +=  "\r\n\r\n※メールの送信に失敗しましたので、Gmailにて送信します。" + "\r\n"
 		body +=  "＊＊＊＊以下、抜粋失敗のエラー＊＊＊＊" + "\r\n"
 		body +=  e.message + "\r\n"

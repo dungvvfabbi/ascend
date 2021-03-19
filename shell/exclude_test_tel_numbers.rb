@@ -206,6 +206,7 @@ def sendMailInfoFinish(mysql_cli)
 	if arr_t80.length() == 0 && arr_t81.length() == 0 && arr_t800.length() == 0
 		message = "先月分のテスト発信番号データ除外処理が正常に実行されました。"
 	end
+	puts message
 	sendMailInfo("", message)
 end
 ############################################
@@ -222,7 +223,7 @@ begin
 	db_pass = config[:database_pass]
 	db_schema = config[:database_schema]
 	server_name = config[:aserver_name]
-	mysql_cli = Mysql.connect(db_ip, db_id, db_pass, db_schema)
+	mysql_cli = Mysql.connect("127.0.0.1", "root", "123456", "robot_test", 3306)
 	mysql_cli.charset = "utf8"
 	time_update = Time.now.strftime("%Y-%m-%d %H:%M:%S")
 	prev_month = DateTime.now.prev_month(1)
@@ -238,5 +239,6 @@ rescue Exception => e
 	writeLog(program_name + "エラー：テスト発信番号除外バッチ実行：失敗 - " + e.message)
 	writeLog(e.backtrace.join("\n"))
 	sendMailError("")
+	puts e.backtrace.join("\n")
 	exit 9
 end

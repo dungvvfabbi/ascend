@@ -1,0 +1,162 @@
+[2021/03/19 09:55:19] [SendMailError]メール通知エラー
+[2021/03/19 09:55:19] [SendMailError]to : ["dungvv@fabbi.com.vn"]
+[2021/03/19 09:55:19] [SendMailError]from : astar_report@ascend-corp.co.jp
+[2021/03/19 09:55:19] [SendMailError]subject : 【はやぶさ】(GS-DEV環境)通知
+[2021/03/19 09:55:19] [SendMailError]body : 先月分のテスト発信番号データ除外処理が実行されましたが、以下の発信テスト番号データが残存しているので、速やかに削除をお願いします。
+t800_sms_send_results: 09000000005
+・スケジュールID: 
+
+
+※メールの送信に失敗しましたので、Gmailにて送信します。
+＊＊＊＊以下、抜粋失敗のエラー＊＊＊＊
+535 5.7.3 Authentication unsuccessful [HK0PR01CA0071.apcprd01.prod.exchangelabs.com]
+
+＊＊＊＊メールの送信失敗時のエラーEND＊＊＊＊
+[2021/03/19 09:55:21] [SendMailError]Gmailでメール送信失敗
+[2021/03/19 18:21:19] [SendMailError]メール通知エラー
+[2021/03/19 18:21:19] [SendMailError]to : ["dungvv@fabbi.com.vn"]
+[2021/03/19 18:21:19] [SendMailError]from : astar_report@ascend-corp.co.jp
+[2021/03/19 18:21:19] [SendMailError]subject : 【はやぶさ】(GS-DEV環境)通知
+[2021/03/19 18:21:19] [SendMailError]body : 先月分のテスト発信番号データ除外処理が実行されましたが、以下の発信テスト番号データが残存しているので、速やかに削除をお願いします。
+t800_sms_send_results: 09000000005
+・スケジュールID: 
+
+
+※メールの送信に失敗しましたので、Gmailにて送信します。
+＊＊＊＊以下、抜粋失敗のエラー＊＊＊＊
+535 5.7.3 Authentication unsuccessful [HK2PR04CA0057.apcprd04.prod.outlook.com]
+
+＊＊＊＊メールの送信失敗時のエラーEND＊＊＊＊
+[2021/03/19 18:21:20] [SendMailError]Gmailでメール送信失敗
+[2021/03/19 18:22:40] err_exclude_test_tel_numbers
+[2021/03/19 18:22:40] [ExcludeTestTelNumbers]エラー：テスト発信番号除外バッチ実行：失敗 - Access denied for user 'ascend_db_admin'@'localhost' (using password: YES)
+[2021/03/19 18:22:40] /var/lib/gems/2.5.0/gems/ruby-mysql-2.9.14/lib/mysql/protocol.rb:504:in `read'
+/var/lib/gems/2.5.0/gems/ruby-mysql-2.9.14/lib/mysql/protocol.rb:192:in `authenticate'
+/var/lib/gems/2.5.0/gems/ruby-mysql-2.9.14/lib/mysql.rb:116:in `connect'
+/var/lib/gems/2.5.0/gems/ruby-mysql-2.9.14/lib/mysql.rb:50:in `new'
+exclude_test_tel_numbers.rb:225:in `<main>'
+[2021/03/19 18:22:46] [SendMailError]メール通知エラー
+[2021/03/19 18:22:46] [SendMailError]to : ["hayabusa_dev@ascend-corp.co.jp"]
+[2021/03/19 18:22:46] [SendMailError]from : astar_report@ascend-corp.co.jp
+[2021/03/19 18:22:46] [SendMailError]subject : 【はやぶさ】(GS-DEV環境)エラー
+[2021/03/19 18:22:46] [SendMailError]body : お疲れ様です。
+エラーが発生しました。
+詳細は下記資料と添付ファイルを確認し、ご対応お願いします。
+※資料の場所：\\10.121.0.241\ascend-sjk\事業部フォルダ\システム事業部\91_システム障害手順\はやぶさ_公明党
+・区分: クーロン
+
+
+※メールの送信に失敗しましたので、Gmailにて送信します。
+＊＊＊＊以下、抜粋失敗のエラー＊＊＊＊
+535 5.7.3 Authentication unsuccessful [HKAPR03CA0017.apcprd03.prod.outlook.com]
+
+＊＊＊＊メールの送信失敗時のエラーEND＊＊＊＊
+以上、宜しくお願いします。
+[2021/03/19 18:22:46] [SendMailError]logFilePath : /tmp/log20210319-14565-845vjz
+[2021/03/19 18:22:46] [SendMailError]logFileName : error_log.txt
+[2021/03/19 18:22:48] [SendMailError]Gmailでメール送信失敗
+[2021/03/19 18:23:52] [SendMailError]メール通知エラー
+[2021/03/19 18:23:52] [SendMailError]to : ["dungvv@fabbi.com.vn"]
+[2021/03/19 18:23:52] [SendMailError]from : astar_report@ascend-corp.co.jp
+[2021/03/19 18:23:52] [SendMailError]subject : 【はやぶさ】(GS-DEV環境)通知
+[2021/03/19 18:23:52] [SendMailError]body : 先月分のテスト発信番号データ除外処理が実行されましたが、以下の発信テスト番号データが残存しているので、速やかに削除をお願いします。
+t800_sms_send_results: 09000000005
+・スケジュールID: 
+
+
+※メールの送信に失敗しましたので、Gmailにて送信します。
+＊＊＊＊以下、抜粋失敗のエラー＊＊＊＊
+535 5.7.3 Authentication unsuccessful [HKAPR04CA0004.apcprd04.prod.outlook.com]
+
+＊＊＊＊メールの送信失敗時のエラーEND＊＊＊＊
+[2021/03/19 18:23:54] [SendMailError]Gmailでメール送信失敗
+[2021/03/19 18:25:58] [SendMailError]メール通知エラー
+[2021/03/19 18:25:58] [SendMailError]to : ["dungvv@fabbi.com.vn"]
+[2021/03/19 18:25:58] [SendMailError]from : astar_report@ascend-corp.co.jp
+[2021/03/19 18:25:58] [SendMailError]subject : 【はやぶさ】(GS-DEV環境)通知
+[2021/03/19 18:25:58] [SendMailError]body : 先月分のテスト発信番号データ除外処理が実行されましたが、以下の発信テスト番号データが残存しているので、速やかに削除をお願いします。
+t800_sms_send_results: 09000000005
+・スケジュールID: 
+
+
+※メールの送信に失敗しましたので、Gmailにて送信します。
+＊＊＊＊以下、抜粋失敗のエラー＊＊＊＊
+535 5.7.3 Authentication unsuccessful [HK2P15301CA0010.APCP153.PROD.OUTLOOK.COM]
+
+＊＊＊＊メールの送信失敗時のエラーEND＊＊＊＊
+[2021/03/19 18:25:59] [SendMailError]Gmailでメール送信失敗
+[2021/03/19 18:29:38] [SendMailError]メール通知エラー
+[2021/03/19 18:29:38] [SendMailError]to : ["dungvv@fabbi.com.vn"]
+[2021/03/19 18:29:38] [SendMailError]from : astar_report@ascend-corp.co.jp
+[2021/03/19 18:29:38] [SendMailError]subject : 【はやぶさ】(GS-DEV環境)通知
+[2021/03/19 18:29:38] [SendMailError]body : 先月分のテスト発信番号データ除外処理が実行されましたが、以下の発信テスト番号データが残存しているので、速やかに削除をお願いします。
+t800_sms_send_results: 09000000005
+・スケジュールID: 
+
+
+※メールの送信に失敗しましたので、Gmailにて送信します。
+＊＊＊＊以下、抜粋失敗のエラー＊＊＊＊
+535 5.7.3 Authentication unsuccessful [HK0PR01CA0060.apcprd01.prod.exchangelabs.com]
+
+＊＊＊＊メールの送信失敗時のエラーEND＊＊＊＊
+[2021/03/19 18:29:39] [SendMailError]Gmailでメール送信失敗
+[2021/03/19 19:26:14] [SendMailError]メール通知エラー
+[2021/03/19 19:26:14] [SendMailError]to : ["dungvv@fabbi.com.vn"]
+[2021/03/19 19:26:14] [SendMailError]from : astar_report@ascend-corp.co.jp
+[2021/03/19 19:26:14] [SendMailError]subject : 【はやぶさ】(GS-DEV環境)通知
+[2021/03/19 19:26:14] [SendMailError]body : 先月分のテスト発信番号データ除外処理が実行されましたが、以下の発信テスト番号データが残存しているので、速やかに削除をお願いします。
+t800_sms_send_results: 09000000005
+・スケジュールID: 
+
+
+※メールの送信に失敗しましたので、Gmailにて送信します。
+＊＊＊＊以下、抜粋失敗のエラー＊＊＊＊
+535 5.7.3 Authentication unsuccessful [HK2PR06CA0016.apcprd06.prod.outlook.com]
+
+＊＊＊＊メールの送信失敗時のエラーEND＊＊＊＊
+[2021/03/19 19:26:16] [SendMailError]Gmailでメール送信失敗
+[2021/03/19 19:27:00] [SendMailError]メール通知エラー
+[2021/03/19 19:27:00] [SendMailError]to : ["dungvv@fabbi.com.vn"]
+[2021/03/19 19:27:00] [SendMailError]from : astar_report@ascend-corp.co.jp
+[2021/03/19 19:27:00] [SendMailError]subject : 【はやぶさ】(GS-DEV環境)通知
+[2021/03/19 19:27:00] [SendMailError]body : 先月分のテスト発信番号データ除外処理が実行されましたが、以下の発信テスト番号データが残存しているので、速やかに削除をお願いします。
+t800_sms_send_results: 09000000005
+・スケジュールID: 
+
+
+※メールの送信に失敗しましたので、Gmailにて送信します。
+＊＊＊＊以下、抜粋失敗のエラー＊＊＊＊
+535 5.7.3 Authentication unsuccessful [HKAPR03CA0019.apcprd03.prod.outlook.com]
+
+＊＊＊＊メールの送信失敗時のエラーEND＊＊＊＊
+[2021/03/19 19:27:02] [SendMailError]Gmailでメール送信失敗
+[2021/03/19 19:27:29] [SendMailError]メール通知エラー
+[2021/03/19 19:27:29] [SendMailError]to : ["dungvv@fabbi.com.vn"]
+[2021/03/19 19:27:29] [SendMailError]from : astar_report@ascend-corp.co.jp
+[2021/03/19 19:27:29] [SendMailError]subject : 【はやぶさ】(GS-DEV環境)通知
+[2021/03/19 19:27:29] [SendMailError]body : 先月分のテスト発信番号データ除外処理が実行されましたが、以下の発信テスト番号データが残存しているので、速やかに削除をお願いします。
+t800_sms_send_results: 09000000005
+・スケジュールID: 
+
+
+※メールの送信に失敗しましたので、Gmailにて送信します。
+＊＊＊＊以下、抜粋失敗のエラー＊＊＊＊
+535 5.7.3 Authentication unsuccessful [HKAPR03CA0019.apcprd03.prod.outlook.com]
+
+＊＊＊＊メールの送信失敗時のエラーEND＊＊＊＊
+[2021/03/19 19:27:31] [SendMailError]Gmailでメール送信失敗
+[2021/03/19 19:28:24] [SendMailError]メール通知エラー
+[2021/03/19 19:28:24] [SendMailError]to : ["dungvv@fabbi.com.vn"]
+[2021/03/19 19:28:24] [SendMailError]from : astar_report@ascend-corp.co.jp
+[2021/03/19 19:28:24] [SendMailError]subject : 【はやぶさ】(GS-DEV環境)通知
+[2021/03/19 19:28:24] [SendMailError]body : 先月分のテスト発信番号データ除外処理が実行されましたが、以下の発信テスト番号データが残存しているので、速やかに削除をお願いします。
+t800_sms_send_results: 09000000005
+・スケジュールID: 
+
+
+※メールの送信に失敗しましたので、Gmailにて送信します。
+＊＊＊＊以下、抜粋失敗のエラー＊＊＊＊
+535 5.7.3 Authentication unsuccessful [HK2P15301CA0015.APCP153.PROD.OUTLOOK.COM]
+
+＊＊＊＊メールの送信失敗時のエラーEND＊＊＊＊
+[2021/03/19 19:28:25] [SendMailError]Gmailでメール送信失敗

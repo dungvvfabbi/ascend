@@ -189,12 +189,13 @@ end
 ############################################
 def sendMailInfoFinish(mysql_cli)
 	message = "先月分のテスト発信番号データ除外処理が実行されましたが、以下の発信テスト番号データが残存しているので、速やかに削除をお願いします。\n"
+	puts message
 	arr_t80 = getRemainT80(mysql_cli)
 	puts arr_t80
 	if arr_t80.length() > 0
 		message = message + "t80_outgoing_results: "
 		arr_t80.each do | row |
-			message = message + row['tel_no'] + ","
+			message = message + row[0] + ","
 		end
 		message = message[0, message.length - 1] +  "\n"
 	end
@@ -202,7 +203,7 @@ def sendMailInfoFinish(mysql_cli)
 	if arr_t81.length() > 0
 		message = message + "t81_incoming_results: "
 		arr_t81.each do | row |
-			message = message + row['tel_no'] + ","
+			message = message + row[0] + ","
 		end
 		message = message[0, message.length - 1] +  "\n"
 	end
@@ -210,7 +211,7 @@ def sendMailInfoFinish(mysql_cli)
 	if arr_t800.length() > 0
 		message = message + "t800_sms_send_results: "
 		arr_t800.each do | row |
-			message = message + row['tel_no'] + ","
+			message = message + row[0] + ","
 		end
 		message = message[0, message.length - 1]
 	end
@@ -234,7 +235,7 @@ begin
 	@db_pass  = "123456"
 	@db_name = "robot_test"
 
-	mysql_cli=Mysql2::Client.new(:host => @db_host , :username => @db_user, :password => @db_pass, :database =>@db_name)
+	mysql_cli=Mysql.connect("127.0.0.1", "root", "123456", "robot_test", 3306)
 	time_update = Time.now.strftime("%Y-%m-%d %H:%M:%S")
 	prev_month = DateTime.now.prev_month(1)
 	start_time = prev_month.strftime("%Y-%m-01 00:00:00")

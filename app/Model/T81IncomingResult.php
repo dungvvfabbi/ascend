@@ -4,7 +4,7 @@
  * T81IncomingResult model.
  */
 class T81IncomingResult extends AppModel {
-	var $name = 'T81IncomingResult';
+    var $name = 'T81IncomingResult';
 
     function importUtilComponent()
     {
@@ -15,119 +15,121 @@ class T81IncomingResult extends AppModel {
        return $gc;
     }
 
-	function getIncomingResultById($id) {
-		$options['fields'] = array(
-			'T81IncomingResult.*'
-		);
-		$options['conditions'] = array(
-			'T81IncomingResult.id' => $id,
-		);
+    function getIncomingResultById($id) {
+        $options['fields'] = array(
+            'T81IncomingResult.*'
+        );
+        $options['conditions'] = array(
+            'T81IncomingResult.id' => $id
+        );
 
-		return $this->find('all', $options);
-	}
+        return $this->find('all', $options);
+    }
 
-	function getListByCompanyId($company_id, $limit=null, $page=null, $sort_order=null, $filter=null) {
-		$options['fields'] = array(
-			'T81IncomingResult.*',
-			'M05User.user_name',
-		);
+    function getListByCompanyId($company_id, $limit=null, $page=null, $sort_order=null, $filter=null) {
+        $options['fields'] = array(
+            'T81IncomingResult.*',
+            'M05User.user_name',
+        );
 
-		$options['joins'] = array(
-			array(
-				'table' => 'm05_users',
-				'alias' => 'M05User',
-				'fields' => array('user_name'),
-				'type' => 'left',
-				'conditions' => array(
-					'T81IncomingResult.entry_user = M05User.user_id',
-				),
-			),
-		);
+        $options['joins'] = array(
+            array(
+                'table' => 'm05_users',
+                'alias' => 'M05User',
+                'fields' => array('user_name'),
+                'type' => 'left',
+                'conditions' => array(
+                    'T81IncomingResult.entry_user = M05User.user_id',
+                ),
+            ),
+        );
 
-		if(isset($filter) && !empty($filter)){
-			if(isset($filter[1])){
-				$options['conditions']['T81IncomingResult.list_no LIKE'] = "%".$filter[1]."%";
-			}
-			if(isset($filter[2])){
-				$options['conditions']['T81IncomingResult.list_name LIKE'] = "%".$filter[2]."%";
-			}
-			if(isset($filter[3])){
-				$options['conditions']['T81IncomingResult.tel_total LIKE'] = "%".$filter[3]."%";
-			}
-			if(isset($filter[4])){
-				$options['conditions']['DATE_FORMAT(T81IncomingResult.created, "%Y-%m-%d %k:%i") LIKE'] = "%".$filter[4]."%";
-			}
-			if(isset($filter[5])){
-				$options['conditions']['M05User.user_name LIKE'] = "%".$filter[5]."%";
-			}
-		}
-		$options['conditions']['T81IncomingResult.company_id'] = $company_id;
-		if(isset($sort_order) && !empty($sort_order)){
-			$options['order'] = $sort_order;
-		}else{
-			$options['order'] = array(
-				'T81IncomingResult.list_test_flag desc',
-				'T81IncomingResult.created desc',
-			);
-		}
-		if(isset($limit) && !empty($limit)){
-			$options['limit'] = $limit;
-		}
-		if(isset($page) && !empty($page)){
-			$options['page'] = $page;
-		}
-		return $this->find('all', $options);
-	}
+        if(isset($filter) && !empty($filter)){
+            if(isset($filter[1])){
+                $options['conditions']['T81IncomingResult.list_no LIKE'] = "%".$filter[1]."%";
+            }
+            if(isset($filter[2])){
+                $options['conditions']['T81IncomingResult.list_name LIKE'] = "%".$filter[2]."%";
+            }
+            if(isset($filter[3])){
+                $options['conditions']['T81IncomingResult.tel_total LIKE'] = "%".$filter[3]."%";
+            }
+            if(isset($filter[4])){
+                $options['conditions']['DATE_FORMAT(T81IncomingResult.created, "%Y-%m-%d %k:%i") LIKE'] = "%".$filter[4]."%";
+            }
+            if(isset($filter[5])){
+                $options['conditions']['M05User.user_name LIKE'] = "%".$filter[5]."%";
+            }
+        }
+        $options['conditions']['T81IncomingResult.company_id'] = $company_id;
+        $options['conditions']['T81IncomingResult.del_flag'] = "N";
+        if(isset($sort_order) && !empty($sort_order)){
+            $options['order'] = $sort_order;
+        }else{
+            $options['order'] = array(
+                'T81IncomingResult.list_test_flag desc',
+                'T81IncomingResult.created desc',
+            );
+        }
+        if(isset($limit) && !empty($limit)){
+            $options['limit'] = $limit;
+        }
+        if(isset($page) && !empty($page)){
+            $options['page'] = $page;
+        }
+        return $this->find('all', $options);
+    }
 
-	function getListByCompanyIdCount($company_id, $filter=null) {
-		$options['fields'] = array(
-			'T81IncomingResult.*',
-			'M05User.user_name',
-		);
+    function getListByCompanyIdCount($company_id, $filter=null) {
+        $options['fields'] = array(
+            'T81IncomingResult.*',
+            'M05User.user_name',
+        );
 
-		$options['joins'] = array(
-			array(
-				'table' => 'm05_users',
-				'alias' => 'M05User',
-				'type' => 'left',
-				'conditions' => array(
-					'T81IncomingResult.entry_user = M05User.user_id',
-				),
-			),
-		);
+        $options['joins'] = array(
+            array(
+                'table' => 'm05_users',
+                'alias' => 'M05User',
+                'type' => 'left',
+                'conditions' => array(
+                    'T81IncomingResult.entry_user = M05User.user_id',
+                ),
+            ),
+        );
 
-		$options['conditions']['T81IncomingResult.company_id'] = $company_id;
-		if(isset($filter) && !empty($filter)){
-			if(isset($filter[1])){
-				$options['conditions']['T81IncomingResult.list_no LIKE'] = "%".$filter[1]."%";
-			}
-			if(isset($filter[2])){
-				$options['conditions']['T81IncomingResult.list_name LIKE'] = "%".$filter[2]."%";
-			}
-			if(isset($filter[3])){
-				$options['conditions']['T81IncomingResult.tel_total LIKE'] = "%".$filter[3]."%";
-			}
-			if(isset($filter[4])){
-				$options['conditions']['DATE_FORMAT(T81IncomingResult.created, "%Y-%m-%d %k:%i") LIKE'] = "%".$filter[4]."%";
-			}
-			if(isset($filter[5])){
-				$options['conditions']['M05User.user_name LIKE'] = "%".$filter[5]."%";
-			}
-		}
-		return $this->find('count', $options);
-	}
+        $options['conditions']['T81IncomingResult.company_id'] = $company_id;
+        $options['conditions']['T81IncomingResult.del_flag'] = "N";
+        if(isset($filter) && !empty($filter)){
+            if(isset($filter[1])){
+                $options['conditions']['T81IncomingResult.list_no LIKE'] = "%".$filter[1]."%";
+            }
+            if(isset($filter[2])){
+                $options['conditions']['T81IncomingResult.list_name LIKE'] = "%".$filter[2]."%";
+            }
+            if(isset($filter[3])){
+                $options['conditions']['T81IncomingResult.tel_total LIKE'] = "%".$filter[3]."%";
+            }
+            if(isset($filter[4])){
+                $options['conditions']['DATE_FORMAT(T81IncomingResult.created, "%Y-%m-%d %k:%i") LIKE'] = "%".$filter[4]."%";
+            }
+            if(isset($filter[5])){
+                $options['conditions']['M05User.user_name LIKE'] = "%".$filter[5]."%";
+            }
+        }
+        return $this->find('count', $options);
+    }
 
     // 着信設定の状況画面（詳細画面）の表
     function getResultByScheduleId(
-    	$inbound_id = null,
-    	$item_main_column = null,
-    	$limit = null, $page = null,
-    	$sort_order = null,
-    	$filter = null,
-    	$referents = array(),
-    	$arr_pos_ques_basic = array(),
-    	$arr_pos_ques_auth = array(),
-    	$join_col = null
+        $inbound_id = null,
+        $item_main_column = null,
+        $limit = null, $page = null,
+        $sort_order = null,
+        $filter = null,
+        $referents = array(),
+        $arr_pos_ques_basic = array(),
+        $arr_pos_ques_auth = array(),
+        $join_col = null
     ) {
 
         $myUtil = $this->importUtilComponent();
@@ -148,19 +150,19 @@ class T81IncomingResult extends AppModel {
                 ),
             );
         }elseif (isset($item_main_column) && isset($join_col)) {
-	        $options['fields'][] = 'T57InboundTelHistory.*';
-	        $options['joins'] = array(
-				array(
-					'table' => 't57_inbound_tel_histories',
-					'alias' => 'T57InboundTelHistory',
-					'type' => 'left',
-					'conditions' => array(
-						"T57InboundTelHistory.$item_main_column = T81IncomingResult.$join_col",
-						'T57InboundTelHistory.inbound_id = T81IncomingResult.inbound_id',
-						'T57InboundTelHistory.inbound_id = "' . $inbound_id . '"',
-						'T57InboundTelHistory.del_flag = "N"',
-				 	)
-				),
+            $options['fields'][] = 'T57InboundTelHistory.*';
+            $options['joins'] = array(
+                array(
+                    'table' => 't57_inbound_tel_histories',
+                    'alias' => 'T57InboundTelHistory',
+                    'type' => 'left',
+                    'conditions' => array(
+                        "T57InboundTelHistory.$item_main_column = T81IncomingResult.$join_col",
+                        'T57InboundTelHistory.inbound_id = T81IncomingResult.inbound_id',
+                        'T57InboundTelHistory.inbound_id = "' . $inbound_id . '"',
+                        'T57InboundTelHistory.del_flag = "N"',
+                    )
+                ),
             );
         }
 
@@ -227,29 +229,29 @@ class T81IncomingResult extends AppModel {
                         $auth_item_column = $arr_pos_ques_auth[$pos_in_header_ques]['auth_item_column'];
                         if (!in_array($value_filter, array('＜', '＝', '＞', '<', '=', '>'))) {
                             if (($value_filter == '≠')) {
-	                            $str_filter1 = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
-		                                . '>'
-		                                . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
-	                            $str_filter2 = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
-		                                . '<'
-		                                . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
-		                        $options['conditions'][1]['OR'][$str_filter1] = 1;
-		                        $options['conditions'][1]['OR'][$str_filter2] = 1;
+                                $str_filter1 = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
+                                        . '>'
+                                        . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
+                                $str_filter2 = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
+                                        . '<'
+                                        . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
+                                $options['conditions'][1]['OR'][$str_filter1] = 1;
+                                $options['conditions'][1]['OR'][$str_filter2] = 1;
                             } else {
-                            	$options['conditions']['T81IncomingResult.answer' . $referents[$pos_in_header_ques]] = NULL;
+                                $options['conditions']['T81IncomingResult.answer' . $referents[$pos_in_header_ques]] = NULL;
                             }
                         } else {
 
-	                        if ($auth_item_code == 'birthday') {
-	                            $str_filter = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
-	                                . $value_filter
-	                                . ' ' . 'CAST(STR_TO_DATE(T57InboundTelHistory.' . $auth_item_column . ', "%Y年%m月%d日") AS UNSIGNED)';
-	                        } else {
-	                            $str_filter = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
-	                                . $value_filter
-	                                . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
-	                        }
-	                        $options['conditions'][$str_filter] = 1;
+                            if ($auth_item_code == 'birthday') {
+                                $str_filter = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
+                                    . $value_filter
+                                    . ' ' . 'CAST(STR_TO_DATE(T57InboundTelHistory.' . $auth_item_column . ', "%Y年%m月%d日") AS UNSIGNED)';
+                            } else {
+                                $str_filter = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
+                                    . $value_filter
+                                    . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
+                            }
+                            $options['conditions'][$str_filter] = 1;
                         }
                     }
                 } elseif ($referents[$pos_in_header_ques] == 'fax_status') {
@@ -313,12 +315,12 @@ class T81IncomingResult extends AppModel {
                 $join_flag = true;
 
                 if (isset($options['joins'])) {
-	                foreach ($options['joins'] as $table_join) {
-	                    if ($table_join['alias'] == $alias) {
-	                        $join_flag = false;
-	                        break;
-	                    }
-	                }
+                    foreach ($options['joins'] as $table_join) {
+                        if ($table_join['alias'] == $alias) {
+                            $join_flag = false;
+                            break;
+                        }
+                    }
                 }
 
                 if ($join_flag) {
@@ -402,13 +404,13 @@ class T81IncomingResult extends AppModel {
 
     // そのスケジュールにあるフィルタなどを考慮した発信結果の数を戻す
     function getCountByScheduleId(
-    	$inbound_id = null,
-    	$item_main_column = null,
-    	$filter = null,
-    	$referents = array(),
-    	$arr_pos_ques_basic = array(),
-    	$arr_pos_ques_auth = array(),
-    	$join_col = null
+        $inbound_id = null,
+        $item_main_column = null,
+        $filter = null,
+        $referents = array(),
+        $arr_pos_ques_basic = array(),
+        $arr_pos_ques_auth = array(),
+        $join_col = null
     ) {
         $myUtil = $this->importUtilComponent();
         $options['fields'] = array(
@@ -490,29 +492,29 @@ class T81IncomingResult extends AppModel {
                         $auth_item_column = $arr_pos_ques_auth[$pos_in_header_ques]['auth_item_column'];
                         if (!in_array($value_filter, array('＜', '＝', '＞', '<', '=', '>'))) {
                             if (($value_filter == '≠')) {
-                            	$str_filter1 = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
-		                                . '>'
-		                                . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
-	                            $str_filter2 = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
-		                                . '<'
-		                                . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
-		                        $options['conditions'][1]['OR'][$str_filter1] = 1;
-		                        $options['conditions'][1]['OR'][$str_filter2] = 1;
+                                $str_filter1 = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
+                                        . '>'
+                                        . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
+                                $str_filter2 = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
+                                        . '<'
+                                        . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
+                                $options['conditions'][1]['OR'][$str_filter1] = 1;
+                                $options['conditions'][1]['OR'][$str_filter2] = 1;
                             } else {
-                            	$options['conditions']['T81IncomingResult.answer' . $referents[$pos_in_header_ques]] = NULL;
+                                $options['conditions']['T81IncomingResult.answer' . $referents[$pos_in_header_ques]] = NULL;
                             }
                         } else {
-	                        if ($auth_item_code == 'birthday') {
-	                            $str_filter = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
-	                                . $value_filter
-	                                . ' ' . 'CAST(STR_TO_DATE(T57InboundTelHistory.' . $auth_item_column . ', "%Y年%m月%d日") AS UNSIGNED)';
-	                        } else {
-	                            $str_filter = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
-	                                . $value_filter
-	                                . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
-	                        }
-	                        $options['conditions'][$str_filter] = 1;
-                    	}
+                            if ($auth_item_code == 'birthday') {
+                                $str_filter = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
+                                    . $value_filter
+                                    . ' ' . 'CAST(STR_TO_DATE(T57InboundTelHistory.' . $auth_item_column . ', "%Y年%m月%d日") AS UNSIGNED)';
+                            } else {
+                                $str_filter = 'CAST(T81IncomingResult.answer' . $referents[$pos_in_header_ques] . ' AS UNSIGNED) '
+                                    . $value_filter
+                                    . ' ' . 'CAST(T57InboundTelHistory.' . $auth_item_column . ' AS UNSIGNED)';
+                            }
+                            $options['conditions'][$str_filter] = 1;
+                        }
                     }
                 } elseif ($referents[$pos_in_header_ques] == 'fax_status') {
                     $question_no = $referents['fax_ques_no_'.$pos_in_header_ques];                    
@@ -606,48 +608,48 @@ class T81IncomingResult extends AppModel {
             $options['conditions']['T81IncomingResult.call_datetime <='] = $date_to . ' 23:59:59';
         }
         $options['order'] = array(
-        	'T81IncomingResult.call_datetime asc',
+            'T81IncomingResult.call_datetime asc',
         );
         return $this->find('all', $options);
     }
-		
-		function getallbyscheduleid_inboundcollation($inbound_id = null, $item_main_column = null, $join_col = null, $ans_only = null, $date_from=null, $date_to=null) {
-				$options['fields'] = array(
-						'T81IncomingResult.*'
-				);
+        
+        function getallbyscheduleid_inboundcollation($inbound_id = null, $item_main_column = null, $join_col = null, $ans_only = null, $date_from=null, $date_to=null) {
+                $options['fields'] = array(
+                        'T81IncomingResult.*'
+                );
 
-				if (isset($item_main_column) && isset($join_col)) {
-						$options['fields'][] = 'T57InboundTelHistory.*';
-						$options['joins'] = array(
-								array(
-										'table' => 't57_inbound_tel_histories',
-										'alias' => 'T57InboundTelHistory',
-										'type' => 'left',
-										'conditions' => array(
-												"T57InboundTelHistory.$item_main_column = SUBSTRING_INDEX(T81IncomingResult.$join_col,':',1)",
-												'T57InboundTelHistory.inbound_id = T81IncomingResult.inbound_id',
-												'T57InboundTelHistory.del_flag = "N"',
-										)
-								),
-						);
-				}
-				$options['conditions'] = array(
-						'T81IncomingResult.inbound_id' => $inbound_id,
-				);
-				if ($ans_only) {
-						$options['conditions'][] = 'SUBSTR(T81IncomingResult.ans_accuracy,1,POSITION("/" IN T81IncomingResult.ans_accuracy) - 1) > 0';
-						$options['conditions'][] = 'SUBSTR(T81IncomingResult.ans_accuracy,1,POSITION("/" IN T81IncomingResult.ans_accuracy) - 1) = SUBSTR(T81IncomingResult.ans_accuracy,POSITION("/" IN T81IncomingResult.ans_accuracy) + 1)';
-				}
-				if (isset($date_from) && $date_from) {
-						$options['conditions']['T81IncomingResult.call_datetime >='] = $date_from . ' 00:00:00';
-				}
-				if (isset($date_to) && $date_to) {
-						$options['conditions']['T81IncomingResult.call_datetime <='] = $date_to . ' 23:59:59';
-				}
-				$options['order'] = array(
-					'T81IncomingResult.call_datetime asc',
-				);
-				return $this->find('all', $options);
-		}
-		
+                if (isset($item_main_column) && isset($join_col)) {
+                        $options['fields'][] = 'T57InboundTelHistory.*';
+                        $options['joins'] = array(
+                                array(
+                                        'table' => 't57_inbound_tel_histories',
+                                        'alias' => 'T57InboundTelHistory',
+                                        'type' => 'left',
+                                        'conditions' => array(
+                                                "T57InboundTelHistory.$item_main_column = SUBSTRING_INDEX(T81IncomingResult.$join_col,':',1)",
+                                                'T57InboundTelHistory.inbound_id = T81IncomingResult.inbound_id',
+                                                'T57InboundTelHistory.del_flag = "N"',
+                                        )
+                                ),
+                        );
+                }
+                $options['conditions'] = array(
+                        'T81IncomingResult.inbound_id' => $inbound_id,
+                );
+                if ($ans_only) {
+                        $options['conditions'][] = 'SUBSTR(T81IncomingResult.ans_accuracy,1,POSITION("/" IN T81IncomingResult.ans_accuracy) - 1) > 0';
+                        $options['conditions'][] = 'SUBSTR(T81IncomingResult.ans_accuracy,1,POSITION("/" IN T81IncomingResult.ans_accuracy) - 1) = SUBSTR(T81IncomingResult.ans_accuracy,POSITION("/" IN T81IncomingResult.ans_accuracy) + 1)';
+                }
+                if (isset($date_from) && $date_from) {
+                        $options['conditions']['T81IncomingResult.call_datetime >='] = $date_from . ' 00:00:00';
+                }
+                if (isset($date_to) && $date_to) {
+                        $options['conditions']['T81IncomingResult.call_datetime <='] = $date_to . ' 23:59:59';
+                }
+                $options['order'] = array(
+                    'T81IncomingResult.call_datetime asc',
+                );
+                return $this->find('all', $options);
+        }
+        
 }
