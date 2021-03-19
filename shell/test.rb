@@ -5,7 +5,6 @@
 # Since      : 2021/03/03        1.0
 #=============================================================================
 require 'rubygems'
-require 'mysql2/em'
 require 'date'
 require 'time'
 # encoding: UTF-8
