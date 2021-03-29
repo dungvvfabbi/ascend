@@ -26,29 +26,24 @@ config = instance.getData
 ############################################
 def updateT80(mysql_cli, start_time, end_time, time_update)
 	query = <<EOS
-		UPDATE t80_outgoing_results 
-		SET 
-			del_flag = 'Y',
-			modified = '#{time_update}',
-			update_program = 'Delete test number record'
-		WHERE
-			del_flag = 'N' AND 
-				schedule_id IN (SELECT 
-					t20.id
-				FROM
-					t20_out_schedules AS t20
-						INNER JOIN
-					t10_call_lists AS t10 ON t20.list_id = t10.id
-						INNER JOIN
-					m05_users AS m05 ON t20.entry_user = m05.user_id
-				WHERE
-					m05.entry_user = 'ascend'
-						AND t10.list_test_flag = '1'
-						AND t20.created BETWEEN '#{start_time}' AND '#{end_time}')
-				AND tel_no IN (SELECT 
-					tel_no
-				FROM
-					m11_exclusion_tel_numbers)
+		UPDATE t80_outgoing_results AS t80   
+			INNER JOIN   
+		t20_out_schedules AS t20 ON t80.schedule_id = t20.id   
+			INNER JOIN   
+		t10_call_lists AS t10 ON t20.list_id = t10.id   
+			AND t10.list_test_flag = '1'   
+			INNER JOIN   
+		m05_users AS m05 ON t20.entry_user = m05.user_id   
+			AND m05.entry_user = 'ascend'   
+			INNER JOIN   
+			m11_exclusion_tel_numbers AS m11 ON t80.tel_no = m11.tel_no    
+		SET    
+			t80.del_flag = 'Y',
+			t80.modified = '#{time_update}',
+			t80.update_program = 'Delete test number record'   
+		WHERE   
+			t80.del_flag = 'N'
+			AND t80.call_datetime BETWEEN '#{start_time}' AND '#{end_time}'
 EOS
 	mysql_cli.query(query)
 end
@@ -59,7 +54,7 @@ end
 ############################################
 def getRemainT80(mysql_cli)
 	query = <<EOS
-		SELECT tel_no, entry_user
+		SELECT tel_no
 		FROM t80_outgoing_results 
 		WHERE 
 			del_flag = 'N' 
@@ -81,26 +76,21 @@ end
 ############################################
 def updateT81(mysql_cli, start_time, end_time, time_update)
 	query = <<EOS
-		UPDATE t81_incoming_results 
+		UPDATE t81_incoming_results AS t81
+				INNER JOIN
+			t25_inbounds AS t25 ON t81.inbound_id = t25.id
+				INNER JOIN
+			m05_users AS m05 ON t25.entry_user = m05.user_id
+				AND m05.entry_user = 'ascend'
+				INNER JOIN
+			m11_exclusion_tel_numbers AS m11 ON t81.tel_no = m11.tel_no 
 		SET 
-			del_flag = 'Y',
-			modified = '#{time_update}',
-			update_program = 'Delete test number record'
+			t81.del_flag = 'Y',
+			t81.modified = '#{time_update}',
+			t81.update_program = 'Delete test number record'
 		WHERE
-			del_flag = 'N'
-				AND inbound_id IN (SELECT 
-					t25.id
-				FROM
-					t25_inbounds AS t25
-						INNER JOIN
-					m05_users AS m05 ON t25.entry_user = m05.user_id
-				WHERE
-					m05.entry_user = 'ascend'
-						AND t25.created BETWEEN '#{start_time}' AND '#{end_time}')
-				AND tel_no IN (SELECT 
-					tel_no
-				FROM
-					m11_exclusion_tel_numbers)
+			t81.del_flag = 'N'
+			AND t81.call_datetime BETWEEN '#{start_time}' AND '#{end_time}'
 EOS
 	mysql_cli.query(query)
 end
@@ -133,29 +123,24 @@ end
 ############################################
 def updateT800(mysql_cli, start_time, end_time, time_update)
 	query = <<EOS
-		UPDATE t800_sms_send_results 
-		SET 
-			del_flag = 'Y',
-			modified = '#{time_update}',
-			update_program = 'Delete test number record'
+		UPDATE t800_sms_send_results AS t800 
+				INNER JOIN 
+			t200_sms_send_schedules AS t200 ON t800.schedule_id = t200.id 
+				INNER JOIN 
+			t100_sms_send_lists AS t100 ON t200.list_id = t100.id 
+				AND t100.list_test_flag = '1' 
+				INNER JOIN 
+			m05_users AS m05 ON t200.entry_user = m05.user_id 
+				AND m05.entry_user = 'ascend'
+				INNER JOIN
+			m11_exclusion_tel_numbers AS m11 ON t800.tel_no = m11.tel_no
+		SET  
+			t800.del_flag = 'Y',
+			t800.modified = '#{time_update}',
+			t800.update_program = 'Delete test number record'
 		WHERE
-			del_flag = 'N' AND 
-				schedule_id IN (SELECT 
-					t200.id
-				FROM
-					t200_sms_send_schedules AS t200
-						INNER JOIN
-					t100_sms_send_lists AS t100 ON t200.list_id = t100.id
-						INNER JOIN
-					m05_users AS m05 ON t200.entry_user = m05.user_id
-				WHERE
-					m05.entry_user = 'ascend'
-						AND t100.list_test_flag = '1'
-						AND t200.created BETWEEN '#{start_time}' AND '#{end_time}')
-				AND tel_no IN (SELECT 
-					tel_no
-				FROM
-					m11_exclusion_tel_numbers)
+			   t800.del_flag = 'N'
+		 	AND t800.send_datetime BETWEEN '#{start_time}' AND '#{end_time}'
 EOS
 	mysql_cli.query(query)
 end
@@ -166,7 +151,7 @@ end
 ############################################
 def getRemainT800(mysql_cli)
 	query = <<EOS
-		SELECT tel_no, entry_user
+		SELECT tel_no
 		FROM t800_sms_send_results 
 		WHERE
 			del_flag = 'N'
@@ -188,9 +173,7 @@ end
 ############################################
 def sendMailInfoFinish(mysql_cli)
 	message = "先月分のテスト発信番号データ除外処理が実行されましたが、以下の発信テスト番号データが残存しているので、速やかに削除をお願いします。\n"
-	puts message
 	arr_t80 = getRemainT80(mysql_cli)
-	puts arr_t80
 	if arr_t80.length() > 0
 		message = message + "t80_outgoing_results: "
 		arr_t80.each do | row |
@@ -217,7 +200,6 @@ def sendMailInfoFinish(mysql_cli)
 	if arr_t80.length() == 0 && arr_t81.length() == 0 && arr_t800.length() == 0
 		message = "先月分のテスト発信番号データ除外処理が正常に実行されました。"
 	end
-	puts message
 	sendMailInfo("", message)
 end
 ############################################
@@ -239,9 +221,9 @@ begin
 	prev_month = DateTime.now.prev_month(1)
 	start_time = prev_month.strftime("%Y-%m-01 00:00:00")
 	end_time = Date.civil(prev_month.year, prev_month.month, -1).strftime("%Y-%m-%d 23:59:59")
-	# updateT80(mysql_cli, start_time, end_time, time_update)
-	# updateT81(mysql_cli, start_time, end_time, time_update)
-	# updateT800(mysql_cli, start_time, end_time, time_update)
+	updateT80(mysql_cli, start_time, end_time, time_update)
+	updateT81(mysql_cli, start_time, end_time, time_update)
+	updateT800(mysql_cli, start_time, end_time, time_update)
 	sendMailInfoFinish(mysql_cli)
 	mysql_cli.close()
 rescue Exception => e
